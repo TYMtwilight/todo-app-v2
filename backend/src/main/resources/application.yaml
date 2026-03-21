@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: todo
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:mem:tododb}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:}
+    driver-class-name: ${DATABASE_DRIVER:org.h2.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        "[format_sql]": true
+    open-in-view: false
+  h2:
+    console:
+      enabled: ${H2_CONSOLE_ENABLED:false}
+
+server:
+  port: 8080
