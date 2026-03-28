@@ -38,20 +38,23 @@ public class TodoResponse {
         return id;
     }
 
+
     public String getTitle() {
         return title;
     }
+
 
     public Boolean getCompleted() {
         return completed;
     }
 
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
+
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
-
 }
