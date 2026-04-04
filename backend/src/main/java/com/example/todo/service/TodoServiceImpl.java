@@ -25,9 +25,28 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public List<TodoResponse> findAll(String status) {
         List<Todo> todos = switch (status.toUpperCase()) {
-            case "ACTIVE" -> todoRepository.findByCompleted(false);
-            case "COMPLETED" -> todoRepository.findByCompleted(true);
-            default -> todoRepository.findAllByOrderByCreatedAtDesc();
+            case "ACTIVE" -> {
+                List<Todo> active = todoRepository.findByCompleted(false);
+                if (active.isEmpty()) {
+                    throw new TodoNotFoundException("ACTIVE");
+                }
+                yield active;
+            }
+            case "COMPLETED" -> {
+                List<Todo> completed = todoRepository.findByCompleted(true);
+                if (completed.isEmpty()) {
+                    throw new TodoNotFoundException("COMPLETED");
+                }
+                yield completed;
+            }
+            default -> {
+                List<Todo> all = todoRepository.findAllByOrderByCreatedAtDesc();
+                if (all.isEmpty()) {
+                    throw new TodoNotFoundException("ALL");
+                }
+                yield all;
+            }
+
         };
 
         return todos.stream()
