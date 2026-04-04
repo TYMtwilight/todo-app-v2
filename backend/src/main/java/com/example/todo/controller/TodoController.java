@@ -7,7 +7,7 @@ import com.example.todo.dto.TodoRequest;
 import com.example.todo.dto.TodoResponse;
 import com.example.todo.service.TodoService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class TodoController {
     }
 
     @SuppressWarnings("null")
-    @PutMapping("{/id}")
+    @PutMapping("/{id}")
     public ResponseEntity<TodoResponse> update(
             @PathVariable Long id,
             @Valid @RequestBody TodoRequest request) {
@@ -53,13 +53,15 @@ public class TodoController {
     }
 
     @SuppressWarnings("null")
-    @PatchMapping("/{id}/toggle")
+    @PatchMapping("/{id}")
     public ResponseEntity<TodoResponse> toggle(@PathVariable Long id) {
         return ResponseEntity.ok(todoService.toggleComplete(id));
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
+        todoService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
